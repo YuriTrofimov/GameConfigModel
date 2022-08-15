@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "GameConfigModel",
+	"Description": "Model for game settings and configuration",
+	"Category": "Other",
+	"CreatedBy": "Trofimov Yuriy",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "GameConfigModel",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
