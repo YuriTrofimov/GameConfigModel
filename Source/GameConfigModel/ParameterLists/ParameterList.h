@@ -15,7 +15,7 @@
 /**
  * List of game parameters
  */
-UCLASS()
+UCLASS(BlueprintType)
 class GAMECONFIGMODEL_API UParameterList : public UObject
 {
 	GENERATED_BODY()

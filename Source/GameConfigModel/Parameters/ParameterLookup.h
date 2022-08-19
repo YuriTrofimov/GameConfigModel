@@ -14,7 +14,10 @@ struct FParameterLookupOption
 
 	FParameterLookupOption() = default;
 
-	FParameterLookupOption(const FString& InValue, const FText& InCaption) : Value(InValue), Caption(InCaption) {}
+	FParameterLookupOption(const FString& InValue, const FText& InCaption)
+		: Value(InValue), Caption(InCaption)
+	{
+	}
 
 	/* Parameter value */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -38,8 +41,13 @@ public:
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnLookupSelectionChangedHandler, FParameterLookupOption, Option, int32, SelectedIndex, bool, bCanBack, bool, bCanForward);
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLookupOptionsListChangedHandler);
+
 	UPROPERTY(BlueprintAssignable, Category = "UI")
 	FOnLookupSelectionChangedHandler OnSelectionChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "UI")
+	FOnLookupOptionsListChangedHandler OnOptionsListChanged;
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	virtual void SelectOptionByIndex(int32 OptionIndex);
@@ -53,13 +61,15 @@ public:
 	UFUNCTION(BlueprintPure, Category = "UI")
 	virtual int32 GetSelectedIndex();
 
+	UFUNCTION(BlueprintPure, Category = "UI")
+	void GetOptionsCaptions(TArray<FText>& Captions);
+
 	void AddOption(const FString& Value, const FText& Caption);
 	void RemoveOption(const FString& InValue);
 	void GetOptionsValues(TArray<FString>& Values);
-	void GetOptionsCaptions(TArray<FText>& Captions);
+
 	/* Returns TRUE if option with current value exists */
 	bool HasOptionValue(const FString& InOptionValue);
-
 	void SetDynamicGetter(const TSharedRef<FGameParameterSource>& InParameterGetter);
 	void SetDynamicSetter(const TSharedRef<FGameParameterSource>& InParameterSetter);
 
@@ -75,6 +85,7 @@ public:
 protected:
 	void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason);
 	virtual void OnInitialized() override;
+	void RaiseOptionsListChanged() const;
 
 	TSharedPtr<FGameParameterSource> ParameterGetter;
 	TSharedPtr<FGameParameterSource> ParameterSetter;
@@ -187,6 +198,9 @@ class GAMECONFIGMODEL_API UParameterLookup_Bool : public UParameterLookup
 
 public:
 	UParameterLookup_Bool();
+
+	UFUNCTION(BlueprintCallable)
+	void SetValue(bool bNewValue = false);
 
 	void SetDefaultValue(bool Value);
 	void SetTrueText(const FText& InText);

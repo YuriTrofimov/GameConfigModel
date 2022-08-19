@@ -11,7 +11,7 @@
  * Screen resolution lookup parameter
  */
 UCLASS()
-class GAMECONFIGMODEL_API UParameterLookup_Resolution : public UParameterLookup
+class GAMECONFIGMODEL_API UParameterLookup_Resolution : public UParameterLookup_Enum
 {
 	GENERATED_BODY()
 
@@ -19,6 +19,7 @@ public:
 	UParameterLookup_Resolution();
 
 protected:
+	virtual void BeginInitialize() override;
 	virtual void OnInitialized() override;
 	virtual void SelectOptionByIndex(int32 OptionIndex) override;
 	virtual void SaveBaseValue() override;

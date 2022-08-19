@@ -4,7 +4,9 @@
 
 #define LOCTEXT_NAMESPACE "ParameterLookup"
 
-UParameterLookup::UParameterLookup() {}
+UParameterLookup::UParameterLookup()
+{
+}
 
 void UParameterLookup::SelectOptionByIndex(int32 OptionIndex)
 {
@@ -44,11 +46,13 @@ void UParameterLookup::AddOption(const FString& Value, const FText& Caption)
 #endif
 
 	Options.Add(FParameterLookupOption(Value, Caption));
+	RaiseOptionsListChanged();
 }
 
 void UParameterLookup::RemoveOption(const FString& InValue)
 {
 	Options.RemoveAll([InValue](const FParameterLookupOption& CheckOption) { return CheckOption.Value == InValue; });
+	RaiseOptionsListChanged();
 }
 
 void UParameterLookup::GetOptionsValues(TArray<FString>& Values)
@@ -144,7 +148,6 @@ void UParameterLookup::SetValueFromString(FString InStringValue, EGameParameterC
 	RaiseParameterChanged(Reason);
 }
 
-#pragma optimize("", off)
 void UParameterLookup::OnInitialized()
 {
 #if !UE_BUILD_SHIPPING
@@ -160,7 +163,11 @@ void UParameterLookup::OnInitialized()
 
 	Super::OnInitialized();
 }
-#pragma optimize("", on)
+
+void UParameterLookup::RaiseOptionsListChanged() const
+{
+	OnOptionsListChanged.Broadcast();
+}
 
 UParameterLookup_Enum::UParameterLookup_Enum()
 {
@@ -189,6 +196,11 @@ UParameterLookup_Bool::UParameterLookup_Bool()
 	Type = EParameterType::Bool;
 	AddOption(TEXT("false"), LOCTEXT("OFF", "OFF"));
 	AddOption(TEXT("true"), LOCTEXT("ON", "ON"));
+}
+
+void UParameterLookup_Bool::SetValue(bool bNewValue)
+{
+	SelectOptionByIndex(bNewValue ? 1 : 0);
 }
 
 void UParameterLookup_Bool::SetDefaultValue(bool Value)

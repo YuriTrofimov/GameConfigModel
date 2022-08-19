@@ -4,7 +4,21 @@
 #include "ParameterEditCondition.h"
 #include "GameFramework/GameUserSettings.h"
 
-UGameParameter::UGameParameter() {}
+UGameParameter::UGameParameter()
+{
+}
+
+void UGameParameter::SetDisplayName(const FText& InDisplayName)
+{
+	DisplayName = InDisplayName;
+	OnDisplayNameChanged.Broadcast(this, DisplayName);
+}
+
+void UGameParameter::SetDescription(const FText& InDescription)
+{
+	Description = InDescription;
+	OnDescriptionChanged.Broadcast(this, Description);
+}
 
 void UGameParameter::SetParentParameter(UGameParameter* InParent)
 {

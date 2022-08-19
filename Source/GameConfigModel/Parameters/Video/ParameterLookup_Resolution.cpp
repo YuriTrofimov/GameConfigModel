@@ -10,9 +10,13 @@ UParameterLookup_Resolution::UParameterLookup_Resolution()
 	Type = EParameterType::Custom;
 }
 
+void UParameterLookup_Resolution::BeginInitialize()
+{
+	EndInitialize();
+}
+
 void UParameterLookup_Resolution::OnInitialized()
 {
-	Super::OnInitialized();
 	InitializeResolutions();
 	SelectCurrentResolution();
 }
@@ -26,11 +30,17 @@ void UParameterLookup_Resolution::SelectOptionByIndex(int32 OptionIndex)
 	}
 }
 
-void UParameterLookup_Resolution::SaveBaseValue() {}
+void UParameterLookup_Resolution::SaveBaseValue()
+{
+}
 
-void UParameterLookup_Resolution::ResetToDefault() {}
+void UParameterLookup_Resolution::ResetToDefault()
+{
+}
 
-void UParameterLookup_Resolution::LoadBaseValue() {}
+void UParameterLookup_Resolution::LoadBaseValue()
+{
+}
 
 void UParameterLookup_Resolution::InitializeResolutions()
 {
@@ -86,7 +96,8 @@ void UParameterLookup_Resolution::InitializeResolutions()
 
 	// Determine available windowed full-screen modes
 	{
-		const FScreenResolutionRHI* RHIInitialResolution = ResArray.FindByPredicate([InitialDisplayMetrics](const FScreenResolutionRHI& ScreenRes) {
+		const FScreenResolutionRHI* RHIInitialResolution = ResArray.FindByPredicate([InitialDisplayMetrics](const FScreenResolutionRHI& ScreenRes)
+		{
 			return ScreenRes.Width == InitialDisplayMetrics.PrimaryDisplayWidth && ScreenRes.Height == InitialDisplayMetrics.PrimaryDisplayHeight;
 		});
 
@@ -212,57 +223,57 @@ void UParameterLookup_Resolution::GetStandardWindowResolutions(const FIntPoint& 
 		// Standard resolutions as provided by Wikipedia (http://en.wikipedia.org/wiki/Graphics_display_resolution)
 		// Extended Graphics Array
 		{
-			new (StandardResolutions) FIntPoint(1024, 768);	 // XGA
+			new(StandardResolutions) FIntPoint(1024, 768); // XGA
 
 			// WXGA (3 versions)
-			new (StandardResolutions) FIntPoint(1366, 768);	 // FWXGA
-			new (StandardResolutions) FIntPoint(1360, 768);
-			new (StandardResolutions) FIntPoint(1280, 800);
+			new(StandardResolutions) FIntPoint(1366, 768); // FWXGA
+			new(StandardResolutions) FIntPoint(1360, 768);
+			new(StandardResolutions) FIntPoint(1280, 800);
 
-			new (StandardResolutions) FIntPoint(1152, 864);	  // XGA+
-			new (StandardResolutions) FIntPoint(1440, 900);	  // WXGA+
-			new (StandardResolutions) FIntPoint(1280, 1024);  // SXGA
-			new (StandardResolutions) FIntPoint(1400, 1050);  // SXGA+
-			new (StandardResolutions) FIntPoint(1680, 1050);  // WSXGA+
-			new (StandardResolutions) FIntPoint(1600, 1200);  // UXGA
-			new (StandardResolutions) FIntPoint(1920, 1200);  // WUXGA
+			new(StandardResolutions) FIntPoint(1152, 864);  // XGA+
+			new(StandardResolutions) FIntPoint(1440, 900);  // WXGA+
+			new(StandardResolutions) FIntPoint(1280, 1024); // SXGA
+			new(StandardResolutions) FIntPoint(1400, 1050); // SXGA+
+			new(StandardResolutions) FIntPoint(1680, 1050); // WSXGA+
+			new(StandardResolutions) FIntPoint(1600, 1200); // UXGA
+			new(StandardResolutions) FIntPoint(1920, 1200); // WUXGA
 		}
 
 		// Quad Extended Graphics Array
 		{
-			new (StandardResolutions) FIntPoint(2048, 1152);  // QWXGA
-			new (StandardResolutions) FIntPoint(2048, 1536);  // QXGA
-			new (StandardResolutions) FIntPoint(2560, 1600);  // WQXGA
-			new (StandardResolutions) FIntPoint(2560, 2048);  // QSXGA
-			new (StandardResolutions) FIntPoint(3200, 2048);  // WQSXGA
-			new (StandardResolutions) FIntPoint(3200, 2400);  // QUXGA
-			new (StandardResolutions) FIntPoint(3840, 2400);  // WQUXGA
+			new(StandardResolutions) FIntPoint(2048, 1152); // QWXGA
+			new(StandardResolutions) FIntPoint(2048, 1536); // QXGA
+			new(StandardResolutions) FIntPoint(2560, 1600); // WQXGA
+			new(StandardResolutions) FIntPoint(2560, 2048); // QSXGA
+			new(StandardResolutions) FIntPoint(3200, 2048); // WQSXGA
+			new(StandardResolutions) FIntPoint(3200, 2400); // QUXGA
+			new(StandardResolutions) FIntPoint(3840, 2400); // WQUXGA
 		}
 
 		// Hyper Extended Graphics Array
 		{
-			new (StandardResolutions) FIntPoint(4096, 3072);  // HXGA
-			new (StandardResolutions) FIntPoint(5120, 3200);  // WHXGA
-			new (StandardResolutions) FIntPoint(5120, 4096);  // HSXGA
-			new (StandardResolutions) FIntPoint(6400, 4096);  // WHSXGA
-			new (StandardResolutions) FIntPoint(6400, 4800);  // HUXGA
-			new (StandardResolutions) FIntPoint(7680, 4800);  // WHUXGA
+			new(StandardResolutions) FIntPoint(4096, 3072); // HXGA
+			new(StandardResolutions) FIntPoint(5120, 3200); // WHXGA
+			new(StandardResolutions) FIntPoint(5120, 4096); // HSXGA
+			new(StandardResolutions) FIntPoint(6400, 4096); // WHSXGA
+			new(StandardResolutions) FIntPoint(6400, 4800); // HUXGA
+			new(StandardResolutions) FIntPoint(7680, 4800); // WHUXGA
 		}
 
 		// High-Definition
 		{
-			new (StandardResolutions) FIntPoint(640, 360);	   // nHD
-			new (StandardResolutions) FIntPoint(960, 540);	   // qHD
-			new (StandardResolutions) FIntPoint(1280, 720);	   // HD
-			new (StandardResolutions) FIntPoint(1920, 1080);   // FHD
-			new (StandardResolutions) FIntPoint(2560, 1440);   // QHD
-			new (StandardResolutions) FIntPoint(3200, 1800);   // WQXGA+
-			new (StandardResolutions) FIntPoint(3840, 2160);   // UHD 4K
-			new (StandardResolutions) FIntPoint(4096, 2160);   // Digital Cinema Initiatives 4K
-			new (StandardResolutions) FIntPoint(7680, 4320);   // FUHD
-			new (StandardResolutions) FIntPoint(5120, 2160);   // UHD 5K
-			new (StandardResolutions) FIntPoint(5120, 2880);   // UHD+
-			new (StandardResolutions) FIntPoint(15360, 8640);  // QUHD
+			new(StandardResolutions) FIntPoint(640, 360);    // nHD
+			new(StandardResolutions) FIntPoint(960, 540);    // qHD
+			new(StandardResolutions) FIntPoint(1280, 720);   // HD
+			new(StandardResolutions) FIntPoint(1920, 1080);  // FHD
+			new(StandardResolutions) FIntPoint(2560, 1440);  // QHD
+			new(StandardResolutions) FIntPoint(3200, 1800);  // WQXGA+
+			new(StandardResolutions) FIntPoint(3840, 2160);  // UHD 4K
+			new(StandardResolutions) FIntPoint(4096, 2160);  // Digital Cinema Initiatives 4K
+			new(StandardResolutions) FIntPoint(7680, 4320);  // FUHD
+			new(StandardResolutions) FIntPoint(5120, 2160);  // UHD 5K
+			new(StandardResolutions) FIntPoint(5120, 2880);  // UHD+
+			new(StandardResolutions) FIntPoint(15360, 8640); // QUHD
 		}
 
 		// Sort the list by total resolution size
@@ -291,6 +302,7 @@ void UParameterLookup_Resolution::RefreshOptions(EWindowMode::Type WindowMode)
 		FText Caption = Resolutions[Index]->GetDisplayText();
 		Options.Add(FParameterLookupOption(LexToString(Index), Caption));
 	}
+	RaiseOptionsListChanged();
 }
 
 void UParameterLookup_Resolution::SelectAppropriateResolutions()
@@ -302,9 +314,12 @@ void UParameterLookup_Resolution::SelectAppropriateResolutions()
 		Resolutions.Empty();
 		switch (WindowMode)
 		{
-			case EWindowMode::Windowed: Resolutions.Append(ResolutionsWindowed); break;
-			case EWindowMode::WindowedFullscreen: Resolutions.Append(ResolutionsWindowedFullscreen); break;
-			case EWindowMode::Fullscreen: Resolutions.Append(ResolutionsFullscreen); break;
+			case EWindowMode::Windowed: Resolutions.Append(ResolutionsWindowed);
+				break;
+			case EWindowMode::WindowedFullscreen: Resolutions.Append(ResolutionsWindowedFullscreen);
+				break;
+			case EWindowMode::Fullscreen: Resolutions.Append(ResolutionsFullscreen);
+				break;
 			default: break;
 		}
 		RefreshOptions(WindowMode);

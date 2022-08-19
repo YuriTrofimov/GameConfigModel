@@ -34,7 +34,7 @@ enum class EGameParameterChangeReason : uint8
 /**
  * Game parameter
  */
-UCLASS(Abstract)
+UCLASS(Abstract, BlueprintType)
 class GAMECONFIGMODEL_API UGameParameter : public UObject
 {
 	GENERATED_BODY()
@@ -43,21 +43,22 @@ public:
 	UGameParameter();
 
 	DECLARE_EVENT_TwoParams(UGameParameter, FOnParameterChanged, UGameParameter*, EGameParameterChangeReason);
-
 	DECLARE_EVENT_OneParam(UGameParameter, FOnParameterEditConditionChanged, UGameParameter*);
-
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnParameterVisibleChangedHandler, UGameParameter*, Parameter, bool, bIsVisible);
-
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnParameterEnabledChangedHandler, UGameParameter*, Parameter, bool, bIsEnabled);
-
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTextValueChangedHandler, UGameParameter*, Parameter, FText, Text);
+	
 	FOnParameterChanged OnParameterChangedEvent;
 	FOnParameterEditConditionChanged OnParameterEditConditionChangedEvent;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnParameterVisibleChangedHandler OnVisibleChanged;
-
 	UPROPERTY(BlueprintAssignable)
 	FOnParameterEnabledChangedHandler OnEnabledChanged;
+	UPROPERTY(BlueprintAssignable)
+	FOnTextValueChangedHandler OnDisplayNameChanged;
+	UPROPERTY(BlueprintAssignable)
+	FOnTextValueChangedHandler OnDescriptionChanged;
 
 protected:
 	/* Parameter type */
@@ -88,7 +89,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GameConfig|Parameters")
 	FORCEINLINE FText GetDisplayName() const { return DisplayName; }
 
-	void SetDisplayName(const FText& InDisplayName) { DisplayName = InDisplayName; }
+	void SetDisplayName(const FText& InDisplayName);
 
 	UFUNCTION(BlueprintPure, Category = "GameConfig|Parameters")
 	FORCEINLINE FName GetUniqueName() const { return UniqueName; }
@@ -98,7 +99,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GameConfig|Parameters")
 	FORCEINLINE FText GetDescription() const { return Description; }
 
-	void SetDescription(const FText& InDescription) { Description = InDescription; }
+	void SetDescription(const FText& InDescription);
 
 	UFUNCTION(BlueprintPure, Category = "GameConfig|Parameters")
 	const FORCEINLINE FGameplayTagContainer& GetTags() const { return Tags; }
