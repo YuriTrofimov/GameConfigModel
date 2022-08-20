@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// Copyright:       Copyright (C) 2022 Yuriy Trofimov
+// Source Code:     https://github.com/YuriTrofimov/GameConfigModel
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "Delegates/Delegate.h"

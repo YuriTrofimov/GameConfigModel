@@ -1,3 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Copyright:       Copyright (C) 2022 Yuriy Trofimov
+// Source Code:     https://github.com/YuriTrofimov/GameConfigModel
 
 #include "ParameterEditCondition.h"

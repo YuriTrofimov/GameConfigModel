@@ -1,4 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright:       Copyright (C) 2022 Yuriy Trofimov
+// Source Code:     https://github.com/YuriTrofimov/GameConfigModel
 
 using UnrealBuildTool;
 
