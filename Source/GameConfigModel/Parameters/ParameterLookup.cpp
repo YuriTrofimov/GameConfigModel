@@ -16,6 +16,19 @@ void UParameterLookup::SelectOptionByIndex(int32 OptionIndex)
 		const int32 OptionsCount = Options.Num();
 		SelectedIndex = OptionIndex;
 		OnSelectionChanged.Broadcast(Options[OptionIndex], OptionIndex, OptionIndex > 0, OptionIndex < OptionsCount - 1);
+		SetValueFromString(Options[SelectedIndex].Value);
+	}
+}
+
+void UParameterLookup::SelectOptionByValue(const FString& InValue)
+{
+	for (int32 Index = 0, Num = Options.Num(); Index < Num; Index++)
+	{
+		if (Options[Index].Value == InValue)
+		{
+			SelectOptionByIndex(Index);
+			break;
+		}
 	}
 }
 
@@ -29,7 +42,7 @@ void UParameterLookup::SelectNextOption()
 
 void UParameterLookup::SelectPreviousOption()
 {
-	if (SelectedIndex - 1 > 0)
+	if (SelectedIndex - 1 >= 0)
 	{
 		SelectOptionByIndex(SelectedIndex - 1);
 	}
@@ -91,10 +104,10 @@ void UParameterLookup::SetDynamicSetter(const TSharedRef<FGameParameterSource>& 
 	ParameterSetter = InParameterSetter;
 }
 
-FString UParameterLookup::GetValueAsString() const
+FString UParameterLookup::GetValueAsString()
 {
 	check(ParameterGetter);
-	return ParameterGetter->GetValueAsString(LocalPlayer);
+	return ParameterGetter->GetValueAsString(this);
 }
 
 void UParameterLookup::SetValueFromString(FString InStringValue)
@@ -145,7 +158,7 @@ void UParameterLookup::OnSetterReady()
 void UParameterLookup::SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason)
 {
 	check(ParameterSetter);
-	ParameterSetter->SetValue(LocalPlayer, InStringValue);
+	ParameterSetter->SetValue(this, InStringValue);
 	RaiseParameterChanged(Reason);
 }
 
@@ -163,6 +176,8 @@ void UParameterLookup::OnInitialized()
 #endif
 
 	Super::OnInitialized();
+	SaveBaseValue();
+	SelectOptionByValue(BaseValue);
 }
 
 void UParameterLookup::RaiseOptionsListChanged() const

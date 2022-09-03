@@ -4,24 +4,29 @@
 #include "GameParameterSourceDynamic.h"
 #include "GameConfigModel/Parameters/GameParameter.h"
 
-FGameParameterSourceDynamic::FGameParameterSourceDynamic(const TArray<FString>& InDynamicPath) : DynamicPath(InDynamicPath) {}
+#pragma optimize("", off)
+
+FGameParameterSourceDynamic::FGameParameterSourceDynamic(const TArray<FString>& InDynamicPath)
+	: DynamicPath(InDynamicPath)
+{
+}
 
 bool FGameParameterSourceDynamic::Resolve(UGameParameter* InContext)
 {
 	return DynamicPath.Resolve(InContext);
 }
 
-FString FGameParameterSourceDynamic::GetValueAsString(ULocalPlayer* InLocalPlayer) const
+FString FGameParameterSourceDynamic::GetValueAsString(UGameParameter* InContext) const
 {
 	FString OutStringValue;
-	const bool bSuccess = PropertyPathHelpers::GetPropertyValueAsString(InLocalPlayer, DynamicPath, OutStringValue);
+	const bool bSuccess = PropertyPathHelpers::GetPropertyValueAsString(InContext, DynamicPath, OutStringValue);
 	ensure(bSuccess);
 	return OutStringValue;
 }
 
-void FGameParameterSourceDynamic::SetValue(ULocalPlayer* InLocalPlayer, const FString& InValue)
+void FGameParameterSourceDynamic::SetValue(UGameParameter* InContext, const FString& InValue)
 {
-	const bool bSuccess = PropertyPathHelpers::SetPropertyValueFromString(InLocalPlayer, DynamicPath, InValue);
+	const bool bSuccess = PropertyPathHelpers::SetPropertyValueFromString(InContext, DynamicPath, InValue);
 	ensure(bSuccess);
 }
 
@@ -29,3 +34,5 @@ FString FGameParameterSourceDynamic::ToString() const
 {
 	return DynamicPath.ToString();
 }
+
+#pragma optimize("", on)

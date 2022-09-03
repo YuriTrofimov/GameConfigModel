@@ -162,8 +162,7 @@ protected:
 	/* Notify all listeners about parameter value change */
 	void RaiseParameterChanged(EGameParameterChangeReason ChangeReason);
 	void RaiseEditConditionChanged();
-
-private:
+	
 	/** Most settings are immediately ready, but some may require startup time before it's safe to call their functions. */
 	bool bReady = false;
 };

@@ -18,7 +18,7 @@ void UDisplayParameterList::Initialize(ULocalPlayer* InLocalPlayer)
 	LocalPlayer = InLocalPlayer;
 
 	CreateWindowModeParam();
-	CreateResolutionParam();
+	//CreateResolutionParam();
 	CreateVSyncParam();
 }
 
@@ -27,13 +27,12 @@ void UDisplayParameterList::CreateWindowModeParam()
 	auto* Param = Cast<UParameterLookup_Enum>(CreateParameter(TEXT("WindowMode"), UParameterLookup_Enum::StaticClass()));
 	if (!Param) return;
 	Param->SetDisplayName(LOCTEXT("WindowMode_Name", "Window Mode"));
-
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetFullscreenMode));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetFullscreenMode));
-
 	Param->AddEnumOption(EWindowMode::Fullscreen, LOCTEXT("WindowModeFullscreen", "Fullscreen"));
 	Param->AddEnumOption(EWindowMode::WindowedFullscreen, LOCTEXT("WindowModeWindowedFullscreen", "Windowed Fullscreen"));
 	Param->AddEnumOption(EWindowMode::Windowed, LOCTEXT("WindowModeWindowed", "Windowed"));
+	Param->SetDefaultValue(GEngine->GetGameUserSettings()->GetDefaultWindowMode());
 	Param->Initialize(LocalPlayer);
 }
 

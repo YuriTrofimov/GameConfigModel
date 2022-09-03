@@ -18,9 +18,9 @@ public:
 
 	virtual bool Resolve(UGameParameter* InContext) = 0;
 
-	virtual FString GetValueAsString(ULocalPlayer* InContext) const = 0;
+	virtual FString GetValueAsString(UGameParameter* InContext) const = 0;
 
-	virtual void SetValue(ULocalPlayer* InContext, const FString& Value) = 0;
+	virtual void SetValue(UGameParameter* InContext, const FString& Value) = 0;
 
 	virtual FString ToString() const = 0;
 };

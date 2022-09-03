@@ -33,6 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitializeList(APlayerController* PlayerController);
 
+	UFUNCTION(BlueprintCallable)
+	void ResetToDefault();
+
 protected:
 	UPROPERTY(Transient)
 	TObjectPtr<ULocalPlayer> LocalPlayer;

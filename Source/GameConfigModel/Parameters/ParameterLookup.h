@@ -74,7 +74,7 @@ public:
 	void SetDynamicGetter(const TSharedRef<FGameParameterSource>& InParameterGetter);
 	void SetDynamicSetter(const TSharedRef<FGameParameterSource>& InParameterSetter);
 
-	FString GetValueAsString() const;
+	FString GetValueAsString();
 	void SetValueFromString(FString InStringValue);
 	void SetDefaultValueFromString(FString InStringValue);
 
@@ -84,6 +84,7 @@ public:
 	virtual void BeginInitialize() override;
 
 protected:
+	virtual void SelectOptionByValue(const FString& InValue);
 	void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason);
 	virtual void OnInitialized() override;
 	void RaiseOptionsListChanged() const;

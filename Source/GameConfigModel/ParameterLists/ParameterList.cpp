@@ -3,11 +3,21 @@
 
 #include "ParameterList.h"
 
-UParameterList::UParameterList() {}
+UParameterList::UParameterList()
+{
+}
 
 void UParameterList::InitializeList(APlayerController* PlayerController)
 {
 	Initialize(PlayerController->GetLocalPlayer());
+}
+
+void UParameterList::ResetToDefault()
+{
+	for (auto* Param : Parameters)
+	{
+		Param->ResetToDefault();
+	}
 }
 
 UGameParameter* UParameterList::CreateParameter(const FName& UniqueName, TSubclassOf<UGameParameter> Class)

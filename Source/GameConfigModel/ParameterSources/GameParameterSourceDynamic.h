@@ -17,9 +17,9 @@ public:
 
 	virtual bool Resolve(UGameParameter* InContext) override;
 
-	virtual FString GetValueAsString(ULocalPlayer* InLocalPlayer) const override;
+	virtual FString GetValueAsString(UGameParameter* InContext) const override;
 
-	virtual void SetValue(ULocalPlayer* InLocalPlayer, const FString& InValue) override;
+	virtual void SetValue(UGameParameter* InContext, const FString& InValue) override;
 
 	virtual FString ToString() const override;
 
