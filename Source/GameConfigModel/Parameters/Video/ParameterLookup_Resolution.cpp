@@ -22,24 +22,28 @@ void UParameterLookup_Resolution::OnInitialized()
 	SelectCurrentResolution();
 }
 
-void UParameterLookup_Resolution::SelectOptionByIndex(int32 OptionIndex)
-{
-	if (Resolutions.IsValidIndex(OptionIndex) && Resolutions[OptionIndex].IsValid())
-	{
-		GEngine->GetGameUserSettings()->SetScreenResolution(Resolutions[OptionIndex]->GetResolution());
-		RaiseParameterChanged(EGameParameterChangeReason::Change);
-	}
-}
-
 void UParameterLookup_Resolution::SaveBaseValue()
 {
+	if (Resolutions.IsValidIndex(SelectedIndex) && Resolutions[SelectedIndex].IsValid())
+	{
+		GEngine->GetGameUserSettings()->SetScreenResolution(Resolutions[SelectedIndex]->GetResolution());
+	}
 }
 
 void UParameterLookup_Resolution::ResetToDefault()
 {
+	if (bEnabled && bVisible)
+	{
+		SelectCurrentResolution();
+	}
 }
 
 void UParameterLookup_Resolution::LoadBaseValue()
+{
+	SelectCurrentResolution();
+}
+
+void UParameterLookup_Resolution::SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason)
 {
 }
 

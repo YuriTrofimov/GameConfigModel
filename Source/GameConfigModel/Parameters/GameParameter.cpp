@@ -24,6 +24,7 @@ void UGameParameter::SetDescription(const FText& InDescription)
 void UGameParameter::SetParentParameter(UGameParameter* InParent)
 {
 	ParentParameter = InParent;
+	ParentParameter->OnParameterChangedEvent.AddUObject(this, &ThisClass::OnParentParameterChangedHandler);
 }
 
 void UGameParameter::IsVisible(bool& Visible)
@@ -114,4 +115,14 @@ bool UGameParameter::CanEdit()
 		}
 	}
 	return true;
+}
+
+void UGameParameter::OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason)
+{
+	const bool bOldEnabled = bEnabled;
+	bEnabled = CanEdit();
+	if (bOldEnabled != bEnabled)
+	{
+		OnEnabledChanged.Broadcast(this, bEnabled);
+	}
 }

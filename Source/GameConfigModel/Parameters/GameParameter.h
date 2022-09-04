@@ -107,6 +107,7 @@ public:
 
 	void AddTag(const FGameplayTag& InTag) { Tags.AddTag(InTag); }
 
+	void OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason);
 	void SetParentParameter(UGameParameter* InParent);
 	UGameParameter* GetParentParameter() const { return ParentParameter; }
 

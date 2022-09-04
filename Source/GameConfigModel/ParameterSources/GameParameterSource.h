@@ -18,7 +18,7 @@ public:
 
 	virtual bool Resolve(UGameParameter* InContext) = 0;
 
-	virtual FString GetValueAsString(UGameParameter* InContext) const = 0;
+	virtual FString GetValueAsString(UGameParameter* InContext) = 0;
 
 	virtual void SetValue(UGameParameter* InContext, const FString& Value) = 0;
 

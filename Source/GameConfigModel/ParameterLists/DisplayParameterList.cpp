@@ -2,6 +2,9 @@
 // Source Code:     https://github.com/YuriTrofimov/GameConfigModel
 
 #include "DisplayParameterList.h"
+
+#include "GameConfigModel/Parameters/LambdaEditCondition.h"
+#include "GameConfigModel/Parameters/ParameterEditCondition.h"
 #include "GameConfigModel/Parameters/ParameterLookup.h"
 #include "GameConfigModel/Parameters/Video/ParameterLookup_Resolution.h"
 #include "GameFramework/GameUserSettings.h"
@@ -17,30 +20,49 @@ void UDisplayParameterList::Initialize(ULocalPlayer* InLocalPlayer)
 	if (LocalPlayer == InLocalPlayer) return;
 	LocalPlayer = InLocalPlayer;
 
-	CreateWindowModeParam();
-	//CreateResolutionParam();
+	auto* WindowModeParameter = CreateWindowModeParam();
+	CreateResolutionParam(WindowModeParameter);
 	CreateVSyncParam();
 }
 
-void UDisplayParameterList::CreateWindowModeParam()
+UParameterLookup_Enum* UDisplayParameterList::CreateWindowModeParam()
 {
 	auto* Param = Cast<UParameterLookup_Enum>(CreateParameter(TEXT("WindowMode"), UParameterLookup_Enum::StaticClass()));
-	if (!Param) return;
+	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("WindowMode_Name", "Window Mode"));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetFullscreenMode));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetFullscreenMode));
 	Param->AddEnumOption(EWindowMode::Fullscreen, LOCTEXT("WindowModeFullscreen", "Fullscreen"));
 	Param->AddEnumOption(EWindowMode::WindowedFullscreen, LOCTEXT("WindowModeWindowedFullscreen", "Windowed Fullscreen"));
 	Param->AddEnumOption(EWindowMode::Windowed, LOCTEXT("WindowModeWindowed", "Windowed"));
-	Param->SetDefaultValue(GEngine->GetGameUserSettings()->GetDefaultWindowMode());
+
+	EWorldType::Type WorldType = EWorldType::Game;
+	if (const auto* World = LocalPlayer->GetWorld())
+	{
+		WorldType = World->WorldType;
+	}
+	if (WorldType == EWorldType::Game)
+	{
+		Param->SetDefaultValue(EWindowMode::Fullscreen);
+	}
+	else
+	{
+		Param->SetDefaultValue(EWindowMode::Windowed);
+	}
 	Param->Initialize(LocalPlayer);
+	return Param;
 }
 
-void UDisplayParameterList::CreateResolutionParam()
+void UDisplayParameterList::CreateResolutionParam(UParameterLookup_Enum* WindowModeParameter)
 {
 	auto* Param = Cast<UParameterLookup_Enum>(CreateParameter(TEXT("Resolution"), UParameterLookup_Resolution::StaticClass()));
 	if (!Param) return;
 	Param->SetDisplayName(LOCTEXT("Resolution_Name", "Resolution"));
+	Param->SetParentParameter(WindowModeParameter);
+	Param->AddEditCondition(MakeShared<FLambdaEditCondition>([WindowModeParameter](UGameParameter*)
+	{
+		return WindowModeParameter->GetValue<EWindowMode::Type>() == EWindowMode::Fullscreen;
+	}));
 	Param->Initialize(LocalPlayer);
 }
 

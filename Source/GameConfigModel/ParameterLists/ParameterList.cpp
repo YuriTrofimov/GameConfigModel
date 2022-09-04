@@ -20,6 +20,22 @@ void UParameterList::ResetToDefault()
 	}
 }
 
+void UParameterList::LoadBaseValue()
+{
+	for (auto* Param : Parameters)
+	{
+		Param->LoadBaseValue();
+	}
+}
+
+void UParameterList::SaveBaseValue()
+{
+	for (auto* Param : Parameters)
+	{
+		Param->SaveBaseValue();
+	}
+}
+
 UGameParameter* UParameterList::CreateParameter(const FName& UniqueName, TSubclassOf<UGameParameter> Class)
 {
 	if (!LocalPlayer) return nullptr;

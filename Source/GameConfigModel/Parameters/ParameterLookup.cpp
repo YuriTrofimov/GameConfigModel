@@ -15,8 +15,8 @@ void UParameterLookup::SelectOptionByIndex(int32 OptionIndex)
 	{
 		const int32 OptionsCount = Options.Num();
 		SelectedIndex = OptionIndex;
+		BaseValue = Options[OptionIndex].Value;
 		OnSelectionChanged.Broadcast(Options[OptionIndex], OptionIndex, OptionIndex > 0, OptionIndex < OptionsCount - 1);
-		SetValueFromString(Options[SelectedIndex].Value);
 	}
 }
 
@@ -122,7 +122,7 @@ void UParameterLookup::SetDefaultValueFromString(FString InStringValue)
 
 void UParameterLookup::SaveBaseValue()
 {
-	BaseValue = GetValueAsString();
+	SetValueFromString(BaseValue, EGameParameterChangeReason::RestoreToBase);
 }
 
 void UParameterLookup::ResetToDefault()
@@ -135,7 +135,7 @@ void UParameterLookup::ResetToDefault()
 
 void UParameterLookup::LoadBaseValue()
 {
-	SetValueFromString(BaseValue, EGameParameterChangeReason::RestoreToBase);
+	BaseValue = GetValueAsString();
 }
 
 void UParameterLookup::BeginInitialize()
@@ -176,7 +176,7 @@ void UParameterLookup::OnInitialized()
 #endif
 
 	Super::OnInitialized();
-	SaveBaseValue();
+	LoadBaseValue();
 	SelectOptionByValue(BaseValue);
 }
 

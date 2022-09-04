@@ -36,12 +36,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetToDefault();
 
+	UFUNCTION(BlueprintCallable)
+	void LoadBaseValue();
+	
+	UFUNCTION(BlueprintCallable)
+	void SaveBaseValue();
+
 protected:
 	UPROPERTY(Transient)
 	TObjectPtr<ULocalPlayer> LocalPlayer;
 
 	/* Create parameters */
-	virtual void Initialize(ULocalPlayer* InLocalPlayer) PURE_VIRTUAL(, );
+	virtual void Initialize(ULocalPlayer* InLocalPlayer) PURE_VIRTUAL(,);
 
 	/* Creates new parameter. Returns nullptr if name not unique in list */
 	UGameParameter* CreateParameter(const FName& UniqueName, TSubclassOf<UGameParameter> Class);

@@ -23,7 +23,7 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnValueChangedHandler, float, NewValue);
 
 	UFUNCTION(BlueprintPure)
-	FORCEINLINE float GetValue();
+	float GetValue();
 
 	UFUNCTION(BlueprintCallable)
 	void SetValue(float InValue);

@@ -16,7 +16,7 @@ bool FGameParameterSourceDynamic::Resolve(UGameParameter* InContext)
 	return DynamicPath.Resolve(InContext);
 }
 
-FString FGameParameterSourceDynamic::GetValueAsString(UGameParameter* InContext) const
+FString FGameParameterSourceDynamic::GetValueAsString(UGameParameter* InContext)
 {
 	FString OutStringValue;
 	const bool bSuccess = PropertyPathHelpers::GetPropertyValueAsString(InContext, DynamicPath, OutStringValue);

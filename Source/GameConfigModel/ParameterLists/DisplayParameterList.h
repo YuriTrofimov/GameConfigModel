@@ -8,6 +8,8 @@
 #include "UObject/Object.h"
 #include "DisplayParameterList.generated.h"
 
+class UParameterLookup_Enum;
+
 /**
  * Display parameter list
  */
@@ -18,8 +20,8 @@ class GAMECONFIGMODEL_API UDisplayParameterList : public UParameterList
 public:
 	UDisplayParameterList();
 	void CreateVSyncParam();
-	void CreateResolutionParam();
-	void CreateWindowModeParam();
+	void CreateResolutionParam(UParameterLookup_Enum* WindowModeParameter);
+	UParameterLookup_Enum* CreateWindowModeParam();
 
 protected:
 	virtual void Initialize(ULocalPlayer* InLocalPlayer) override;

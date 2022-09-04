@@ -78,14 +78,17 @@ public:
 	void SetValueFromString(FString InStringValue);
 	void SetDefaultValueFromString(FString InStringValue);
 
-	virtual void SaveBaseValue() override;
+	/* Reset value to default with Dynamic Setter */
 	virtual void ResetToDefault() override;
+	/* Load BaseValue variable via Dynamic Getter */
 	virtual void LoadBaseValue() override;
+	/* Use BaseValue variable with Dynamic Setter */
+	virtual void SaveBaseValue() override;
 	virtual void BeginInitialize() override;
 
 protected:
 	virtual void SelectOptionByValue(const FString& InValue);
-	void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason);
+	virtual void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason);
 	virtual void OnInitialized() override;
 	void RaiseOptionsListChanged() const;
 
@@ -131,7 +134,7 @@ public:
 	}
 
 	template <typename EnumType>
-	EnumType GetValue() const
+	EnumType GetValue()
 	{
 		const FString Value = GetValueAsString();
 		return static_cast<EnumType>(StaticEnum<EnumType>()->GetValueByNameString(Value));

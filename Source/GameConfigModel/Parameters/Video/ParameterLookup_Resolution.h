@@ -22,10 +22,10 @@ public:
 protected:
 	virtual void BeginInitialize() override;
 	virtual void OnInitialized() override;
-	virtual void SelectOptionByIndex(int32 OptionIndex) override;
 	virtual void SaveBaseValue() override;
 	virtual void ResetToDefault() override;
 	virtual void LoadBaseValue() override;
+	virtual void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason) override;
 	void InitializeResolutions();
 	static bool ShouldAllowFullScreenResolution(const FScreenResolutionRHI& SrcScreenRes, int32 FilterThreshold);
 	static void GetStandardWindowResolutions(const FIntPoint& MinResolution, const FIntPoint& MaxResolution, float MinAspectRatio, TArray<FIntPoint>& OutResolutions);
