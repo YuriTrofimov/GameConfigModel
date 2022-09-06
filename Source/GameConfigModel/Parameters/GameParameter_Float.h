@@ -33,10 +33,13 @@ public:
 	virtual void ResetToDefault() override;
 	virtual void BeginInitialize() override;
 	virtual void SetDefaultValue(float InDefaultValue);
+	virtual void SaveBaseValue() override;
+	virtual void LoadBaseValue() override;
 protected:
 	virtual void OnInitialized() override;
 	virtual void SetValue(float InValue, EGameParameterChangeReason Reason);
 	TOptional<float> DefaultValue = 0.0f;
+	float BaseValue = 0.0f;
 	TSharedPtr<FGameParameterSource> ParameterGetter;
 	TSharedPtr<FGameParameterSource> ParameterSetter;
 private:

@@ -1,7 +1,6 @@
 ﻿// Copyright:       Copyright (C) 2022 Yuriy Trofimov
 // Source Code:     https://github.com/YuriTrofimov/GameConfigModel
 
-
 #include "GameParameter_Float.h"
 #include "GameConfigModel/ParameterSources/GameParameterSource.h"
 
@@ -61,6 +60,16 @@ void UGameParameter_Float::BeginInitialize()
 void UGameParameter_Float::SetDefaultValue(float InDefaultValue)
 {
 	DefaultValue = InDefaultValue;
+}
+
+void UGameParameter_Float::SaveBaseValue()
+{
+	SetValue(BaseValue);
+}
+
+void UGameParameter_Float::LoadBaseValue()
+{
+	BaseValue = GetValue();
 }
 
 void UGameParameter_Float::OnGetterReady()
