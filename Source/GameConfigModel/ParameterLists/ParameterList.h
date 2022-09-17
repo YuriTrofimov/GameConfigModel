@@ -34,13 +34,13 @@ public:
 	void InitializeList(APlayerController* PlayerController);
 
 	UFUNCTION(BlueprintCallable)
-	void ResetToDefault();
+	virtual void ResetToDefault();
 
 	UFUNCTION(BlueprintCallable)
-	void LoadBaseValue();
+	virtual void LoadBaseValue();
 	
 	UFUNCTION(BlueprintCallable)
-	void SaveBaseValue();
+	virtual void SaveBaseValue();
 
 protected:
 	UPROPERTY(Transient)

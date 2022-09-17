@@ -44,11 +44,15 @@ public:
 	UGameParameter();
 
 	DECLARE_EVENT_TwoParams(UGameParameter, FOnParameterChanged, UGameParameter*, EGameParameterChangeReason);
+
 	DECLARE_EVENT_OneParam(UGameParameter, FOnParameterEditConditionChanged, UGameParameter*);
+
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnParameterVisibleChangedHandler, UGameParameter*, Parameter, bool, bIsVisible);
+
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnParameterEnabledChangedHandler, UGameParameter*, Parameter, bool, bIsEnabled);
+
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTextValueChangedHandler, UGameParameter*, Parameter, FText, Text);
-	
+
 	FOnParameterChanged OnParameterChangedEvent;
 	FOnParameterEditConditionChanged OnParameterEditConditionChangedEvent;
 
@@ -78,6 +82,8 @@ protected:
 	/* The parent parameter */
 	UPROPERTY(Transient)
 	TObjectPtr<UGameParameter> ParentParameter;
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UGameParameter>> ChildrenParameters;
 	/* Parameter edit conditions */
 	TArray<TSharedRef<FParameterEditCondition>> EditConditions;
 
@@ -107,7 +113,8 @@ public:
 
 	void AddTag(const FGameplayTag& InTag) { Tags.AddTag(InTag); }
 
-	void OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason);
+	virtual void OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason);
+	virtual void OnChildParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason);
 	void SetParentParameter(UGameParameter* InParent);
 	UGameParameter* GetParentParameter() const { return ParentParameter; }
 
@@ -132,16 +139,17 @@ public:
 	bool CanEdit();
 
 	/* Save parameter base value */
-	virtual void SaveBaseValue() PURE_VIRTUAL(, );
+	virtual void SaveBaseValue() PURE_VIRTUAL(,);
 
 	/* Resets parameter value to the default */
-	virtual void ResetToDefault() PURE_VIRTUAL(, );
+	virtual void ResetToDefault() PURE_VIRTUAL(,);
 
 	/* Load parameter value before any changes */
-	virtual void LoadBaseValue() PURE_VIRTUAL(, );
+	virtual void LoadBaseValue() PURE_VIRTUAL(,);
 
 	UFUNCTION()
 	UGameUserSettings* GetGameUserSettings() const;
+	void AddChildParameter(UGameParameter* InChildParameter);
 
 protected:
 	/* True - If parameter must be visible in UI */
@@ -163,7 +171,7 @@ protected:
 	/* Notify all listeners about parameter value change */
 	void RaiseParameterChanged(EGameParameterChangeReason ChangeReason);
 	void RaiseEditConditionChanged();
-	
+
 	/** Most settings are immediately ready, but some may require startup time before it's safe to call their functions. */
 	bool bReady = false;
 };

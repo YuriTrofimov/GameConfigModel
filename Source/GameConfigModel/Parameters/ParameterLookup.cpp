@@ -11,22 +11,32 @@ UParameterLookup::UParameterLookup()
 
 void UParameterLookup::SelectOptionByIndex(int32 OptionIndex)
 {
+	SelectOptionByIndex(OptionIndex, EGameParameterChangeReason::Change);
+}
+
+void UParameterLookup::SelectOptionByIndex(int32 OptionIndex, EGameParameterChangeReason Reason)
+{
 	if (Options.IsValidIndex(OptionIndex))
 	{
 		const int32 OptionsCount = Options.Num();
 		SelectedIndex = OptionIndex;
 		BaseValue = Options[OptionIndex].Value;
 		OnSelectionChanged.Broadcast(Options[OptionIndex], OptionIndex, OptionIndex > 0, OptionIndex < OptionsCount - 1);
+
+		if (bApplyOnSelectionChanged)
+		{
+			SetValueFromString(BaseValue, Reason);
+		}
 	}
 }
 
-void UParameterLookup::SelectOptionByValue(const FString& InValue)
+void UParameterLookup::SelectOptionByValue(const FString& InValue, EGameParameterChangeReason Reason)
 {
 	for (int32 Index = 0, Num = Options.Num(); Index < Num; Index++)
 	{
 		if (Options[Index].Value == InValue)
 		{
-			SelectOptionByIndex(Index);
+			SelectOptionByIndex(Index, Reason);
 			break;
 		}
 	}
@@ -177,7 +187,14 @@ void UParameterLookup::OnInitialized()
 
 	Super::OnInitialized();
 	LoadBaseValue();
-	SelectOptionByValue(BaseValue);
+	SelectOptionByValue(BaseValue, EGameParameterChangeReason::RestoreToBase);
+}
+
+void UParameterLookup::OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason)
+{
+	Super::OnParentParameterChangedHandler(InParameter, InChangeReason);
+	LoadBaseValue();
+	SelectOptionByValue(BaseValue, InChangeReason);
 }
 
 void UParameterLookup::RaiseOptionsListChanged() const
@@ -198,7 +215,7 @@ void UParameterLookup_Enum::OnInitialized()
 
 UParameterLookup_Numeric::UParameterLookup_Numeric()
 {
-	Type = EParameterType::Numeric;
+	Type = EParameterType::Enum;
 }
 
 void UParameterLookup_Numeric::OnInitialized()

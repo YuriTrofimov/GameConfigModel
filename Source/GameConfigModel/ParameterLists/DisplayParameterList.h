@@ -5,7 +5,6 @@
 
 #include "CoreMinimal.h"
 #include "ParameterList.h"
-#include "UObject/Object.h"
 #include "DisplayParameterList.generated.h"
 
 class UParameterLookup_Enum;

@@ -32,7 +32,7 @@ struct FParameterLookupOption
 /**
  * Parameter wich value is picked from the list
  */
-UCLASS(Abstract, NotBlueprintType, NotBlueprintable)
+UCLASS(Abstract, BlueprintType, NotBlueprintable)
 class GAMECONFIGMODEL_API UParameterLookup : public UGameParameter
 {
 	GENERATED_BODY()
@@ -52,6 +52,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	virtual void SelectOptionByIndex(int32 OptionIndex);
+	void SelectOptionByIndex(int32 OptionIndex, EGameParameterChangeReason Reason);
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SelectNextOption();
@@ -63,7 +64,7 @@ public:
 	virtual int32 GetSelectedIndex();
 
 	UFUNCTION(BlueprintPure, Category = "UI")
-	void GetOptionsCaptions(TArray<FText>& Captions);
+	virtual void GetOptionsCaptions(TArray<FText>& Captions);
 
 	void AddOption(const FString& Value, const FText& Caption);
 	void RemoveOption(const FString& InValue);
@@ -86,10 +87,17 @@ public:
 	virtual void SaveBaseValue() override;
 	virtual void BeginInitialize() override;
 
+	/* Toggle apply parameter value on selected option changed event */
+	void SetApplyOnSelectionChanged(bool bInEnabled)
+	{
+		bApplyOnSelectionChanged = bInEnabled;
+	}
+
 protected:
-	virtual void SelectOptionByValue(const FString& InValue);
+	virtual void SelectOptionByValue(const FString& InValue, EGameParameterChangeReason Reason);
 	virtual void SetValueFromString(FString InStringValue, EGameParameterChangeReason Reason);
 	virtual void OnInitialized() override;
+	virtual void OnParentParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason) override;
 	void RaiseOptionsListChanged() const;
 
 	TSharedPtr<FGameParameterSource> ParameterGetter;
@@ -102,6 +110,8 @@ protected:
 	TArray<FParameterLookupOption> Options;
 	/* Selected option index */
 	int32 SelectedIndex = 0;
+	/* If true - parameter will be applied on if selected option changed */
+	bool bApplyOnSelectionChanged = false;
 
 private:
 	void OnGetterReady();
@@ -111,7 +121,7 @@ private:
 /*
  * Enum lookup parameter
  */
-UCLASS(BlueprintType)
+UCLASS()
 class GAMECONFIGMODEL_API UParameterLookup_Enum : public UParameterLookup
 {
 	GENERATED_BODY()
@@ -154,7 +164,7 @@ protected:
 /*
  * Numeric lookup parameter
  */
-UCLASS(BlueprintType)
+UCLASS()
 class GAMECONFIGMODEL_API UParameterLookup_Numeric : public UParameterLookup
 {
 	GENERATED_BODY()
@@ -169,7 +179,7 @@ public:
 	}
 
 	template <typename NumberType>
-	void AddOption(NumberType InValue, const FText& InOptionText)
+	void AddNumericOption(NumberType InValue, const FText& InOptionText)
 	{
 		AddOption(LexToString(InValue), InOptionText);
 	}
@@ -196,7 +206,7 @@ protected:
 /*
  * Boolean lookup parameter
  */
-UCLASS(BlueprintType)
+UCLASS()
 class GAMECONFIGMODEL_API UParameterLookup_Bool : public UParameterLookup
 {
 	GENERATED_BODY()

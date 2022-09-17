@@ -25,6 +25,7 @@ void UGameParameter::SetParentParameter(UGameParameter* InParent)
 {
 	ParentParameter = InParent;
 	ParentParameter->OnParameterChangedEvent.AddUObject(this, &ThisClass::OnParentParameterChangedHandler);
+	InParent->AddChildParameter(this);
 }
 
 void UGameParameter::IsVisible(bool& Visible)
@@ -103,6 +104,14 @@ UGameUserSettings* UGameParameter::GetGameUserSettings() const
 	return CastChecked<UGameUserSettings>(GEngine->GetGameUserSettings());
 }
 
+void UGameParameter::AddChildParameter(UGameParameter* InChildParameter)
+{
+	if(ChildrenParameters.Contains(InChildParameter)) return;
+	
+	ChildrenParameters.Add(InChildParameter);
+	InChildParameter->OnParameterChangedEvent.AddUObject(this, &ThisClass::OnChildParameterChangedHandler);
+}
+
 bool UGameParameter::CanEdit()
 {
 	if (!LocalPlayer) return false;
@@ -125,4 +134,8 @@ void UGameParameter::OnParentParameterChangedHandler(UGameParameter* InParameter
 	{
 		OnEnabledChanged.Broadcast(this, bEnabled);
 	}
+}
+
+void UGameParameter::OnChildParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason)
+{
 }
