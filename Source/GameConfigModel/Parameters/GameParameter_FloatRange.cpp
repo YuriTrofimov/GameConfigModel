@@ -3,9 +3,7 @@
 
 #include "GameParameter_FloatRange.h"
 
-UGameParameter_FloatRange::UGameParameter_FloatRange()
-{
-}
+UGameParameter_FloatRange::UGameParameter_FloatRange() {}
 
 void UGameParameter_FloatRange::SetMinValue(float InMinValue)
 {
@@ -15,6 +13,11 @@ void UGameParameter_FloatRange::SetMinValue(float InMinValue)
 void UGameParameter_FloatRange::SetMaxValue(float InMaxValue)
 {
 	MaxValue = InMaxValue;
+}
+
+void UGameParameter_FloatRange::SetValue(float InValue)
+{
+	Super::SetValue(InValue);
 }
 
 void UGameParameter_FloatRange::SetValue(float InValue, EGameParameterChangeReason Reason)

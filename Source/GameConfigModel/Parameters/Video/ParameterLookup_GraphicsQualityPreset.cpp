@@ -9,7 +9,7 @@
 UParameteLookup_GraphicsQualityPreset::UParameteLookup_GraphicsQualityPreset()
 {
 	Type = EParameterType::Custom;
-	CustomOption = FParameterLookupOption(FString::FromInt(CustomIndex),LOCTEXT("GraphicsQualityPreset_Custom", "Custom"));
+	CustomOption = FParameterLookupOption(FString::FromInt(CustomIndex), LOCTEXT("GraphicsQualityPreset_Custom", "Custom"));
 }
 
 void UParameteLookup_GraphicsQualityPreset::SelectOptionByIndex(int32 OptionIndex)
@@ -59,9 +59,7 @@ void UParameteLookup_GraphicsQualityPreset::LoadBaseValue()
 	}
 }
 
-void UParameteLookup_GraphicsQualityPreset::SaveBaseValue()
-{
-}
+void UParameteLookup_GraphicsQualityPreset::SaveBaseValue() {}
 
 void UParameteLookup_GraphicsQualityPreset::GetOptionsCaptions(TArray<FText>& Captions)
 {
@@ -100,6 +98,7 @@ void UParameteLookup_GraphicsQualityPreset::OnInitialized()
 	AddNumericOption(3, LOCTEXT("GraphicsQualityPreset_Epic", "Epic"));
 	LoadBaseValue();
 	SelectOptionByValue(BaseValue, EGameParameterChangeReason::RestoreToBase);
+	OnParameterInitialized.Broadcast(this);
 }
 
 void UParameteLookup_GraphicsQualityPreset::OnChildParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason)

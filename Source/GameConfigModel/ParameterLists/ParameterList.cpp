@@ -3,9 +3,7 @@
 
 #include "ParameterList.h"
 
-UParameterList::UParameterList()
-{
-}
+UParameterList::UParameterList() {}
 
 void UParameterList::InitializeList(APlayerController* PlayerController)
 {

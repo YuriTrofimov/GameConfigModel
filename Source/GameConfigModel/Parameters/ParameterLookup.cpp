@@ -5,9 +5,7 @@
 
 #define LOCTEXT_NAMESPACE "ParameterLookup"
 
-UParameterLookup::UParameterLookup()
-{
-}
+UParameterLookup::UParameterLookup() {}
 
 void UParameterLookup::SelectOptionByIndex(int32 OptionIndex)
 {

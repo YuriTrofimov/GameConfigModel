@@ -8,13 +8,11 @@
 
 #define LOCTEXT_NAMESPACE "GameParameters"
 
-UVideoQualityParameterList::UVideoQualityParameterList()
-{
-}
+UVideoQualityParameterList::UVideoQualityParameterList() {}
 
 void UVideoQualityParameterList::ResetToDefault()
 {
-	if(!PresetParameter) return;
+	if (!PresetParameter) return;
 
 	auto* UserSettings = GEngine->GetGameUserSettings();
 	UserSettings->RunHardwareBenchmark();
@@ -43,7 +41,8 @@ UGameParameter* UVideoQualityParameterList::CreateGraphicsPreset()
 	auto* Param = Cast<UParameteLookup_GraphicsQualityPreset>(CreateParameter(TEXT("GraphicsQualityPreset"), UParameteLookup_GraphicsQualityPreset::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("GraphicsQualityPreset_Name", "Quality Presets"));
-	Param->SetDescription(LOCTEXT("GraphicsQualityPreset_Description", "Quality Preset allows you to adjust multiple video options at once. Try a few options to see what fits your preference and device's performance."));
+	Param->SetDescription(LOCTEXT(
+		"GraphicsQualityPreset_Description", "Quality Preset allows you to adjust multiple video options at once. Try a few options to see what fits your preference and device's performance."));
 	Param->Initialize(LocalPlayer);
 	return Param;
 }
@@ -53,7 +52,9 @@ UGameParameter* UVideoQualityParameterList::CreateGlobalIlluminationQuality(UGam
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("GlobalIlluminationQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("GlobalIlluminationQuality_Name", "Global Illumination"));
-	Param->SetDescription(LOCTEXT("GlobalIlluminationQuality_Description", "Global Illumination controls the quality of dynamically calculated indirect lighting bounces, sky shadowing and Ambient Occlusion. Settings of 'High' and above use more accurate ray tracing methods to solve lighting, but can reduce performance."));
+	Param->SetDescription(
+		LOCTEXT("GlobalIlluminationQuality_Description", "Global Illumination controls the quality of dynamically calculated indirect lighting bounces, sky shadowing and Ambient Occlusion. Settings "
+														 "of 'High' and above use more accurate ray tracing methods to solve lighting, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetGlobalIlluminationQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetGlobalIlluminationQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -71,7 +72,8 @@ UGameParameter* UVideoQualityParameterList::CreateShadowsQuality(UGameParameter*
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("ShadowsQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("ShadowsQuality_Name", "Shadows"));
-	Param->SetDescription(LOCTEXT("ShadowsQuality_Description", "Shadow quality determines the resolution and view distance of dynamic shadows. Shadows improve visual quality and give better depth perception, but can reduce performance."));
+	Param->SetDescription(LOCTEXT("ShadowsQuality_Description",
+		"Shadow quality determines the resolution and view distance of dynamic shadows. Shadows improve visual quality and give better depth perception, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetShadowQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetShadowQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -89,7 +91,8 @@ UGameParameter* UVideoQualityParameterList::CreateAntiAliasingQuality(UGameParam
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("AntiAliasingQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("AntiAliasingQuality_Name", "Anti-Aliasing"));
-	Param->SetDescription(LOCTEXT("AntiAliasingQuality_Description", "Anti-Aliasing reduces jaggy artifacts along geometry edges. Increasing this setting will make edges look smoother, but can reduce performance. Higher settings mean more anti-aliasing."));
+	Param->SetDescription(LOCTEXT("AntiAliasingQuality_Description",
+		"Anti-Aliasing reduces jaggy artifacts along geometry edges. Increasing this setting will make edges look smoother, but can reduce performance. Higher settings mean more anti-aliasing."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetAntiAliasingQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetAntiAliasingQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -125,7 +128,8 @@ UGameParameter* UVideoQualityParameterList::CreateTextureQuality(UGameParameter*
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("TextureQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("TextureQuality_Name", "Textures"));
-	Param->SetDescription(LOCTEXT("TextureQuality_Description", "Texture quality determines the resolution of textures in game. Increasing this setting will make objects more detailed, but can reduce performance."));
+	Param->SetDescription(
+		LOCTEXT("TextureQuality_Description", "Texture quality determines the resolution of textures in game. Increasing this setting will make objects more detailed, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetTextureQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetTextureQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -143,7 +147,8 @@ UGameParameter* UVideoQualityParameterList::CreateVisualEffectQuality(UGameParam
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("VisualEffectQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("VisualEffectQuality_Name", "Effects"));
-	Param->SetDescription(LOCTEXT("VisualEffectQuality_Description", "Effects determines the quality of visual effects and lighting in game. Increasing this setting will increase the quality of visual effects, but can reduce performance."));
+	Param->SetDescription(LOCTEXT("VisualEffectQuality_Description",
+		"Effects determines the quality of visual effects and lighting in game. Increasing this setting will increase the quality of visual effects, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetVisualEffectQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetVisualEffectQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -161,7 +166,8 @@ UGameParameter* UVideoQualityParameterList::CreateReflectionQuality(UGameParamet
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("ReflectionQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("ReflectionQuality_Name", "Reflections"));
-	Param->SetDescription(LOCTEXT("ReflectionQuality_Description", "Reflection quality determines the resolution and accuracy of reflections.  Settings of 'High' and above use more accurate ray tracing methods to solve reflections, but can reduce performance."));
+	Param->SetDescription(LOCTEXT("ReflectionQuality_Description", "Reflection quality determines the resolution and accuracy of reflections.  Settings of 'High' and above use more accurate ray "
+																   "tracing methods to solve reflections, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetReflectionQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetReflectionQuality));
 	Param->SetApplyOnSelectionChanged(true);
@@ -179,7 +185,8 @@ UGameParameter* UVideoQualityParameterList::CreatePostProcessingQuality(UGamePar
 	auto* Param = Cast<UParameterLookup_Numeric>(CreateParameter(TEXT("PostProcessingQuality"), UParameterLookup_Numeric::StaticClass()));
 	if (!Param) return nullptr;
 	Param->SetDisplayName(LOCTEXT("PostProcessingQuality_Name", "Post Processing"));
-	Param->SetDescription(LOCTEXT("PostProcessingQuality_Description", "Post Processing effects include Motion Blur, Depth of Field and Bloom. Increasing this setting improves the quality of post process effects, but can reduce performance."));
+	Param->SetDescription(LOCTEXT("PostProcessingQuality_Description",
+		"Post Processing effects include Motion Blur, Depth of Field and Bloom. Increasing this setting improves the quality of post process effects, but can reduce performance."));
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(GetPostProcessingQuality));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetPostProcessingQuality));
 	Param->SetApplyOnSelectionChanged(true);

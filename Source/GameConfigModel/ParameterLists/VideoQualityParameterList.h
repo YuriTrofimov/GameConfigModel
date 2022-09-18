@@ -16,8 +16,9 @@ class GAMECONFIGMODEL_API UVideoQualityParameterList : public UParameterList
 	GENERATED_BODY()
 public:
 	UVideoQualityParameterList();
-	
+
 	virtual void ResetToDefault() override;
+
 protected:
 	virtual void Initialize(ULocalPlayer* InLocalPlayer) override;
 	UPROPERTY()

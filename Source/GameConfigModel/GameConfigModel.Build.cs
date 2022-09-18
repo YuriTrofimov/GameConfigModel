@@ -22,7 +22,7 @@ public class GameConfigModel : ModuleRules
 			// ... add other public dependencies that you statically link with here ...
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "CoreUObject", "Engine", "Slate", "SlateCore", "RHI", "GameplayTags", "PropertyPath" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "CoreUObject", "Engine", "Slate", "SlateCore", "RHI", "GameplayTags", "PropertyPath", "UMG" });
 
 		DynamicallyLoadedModuleNames.AddRange(new string[] {
 			// ... add any modules that your module loads dynamically here ...

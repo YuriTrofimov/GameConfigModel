@@ -6,10 +6,7 @@
 
 #pragma optimize("", off)
 
-FGameParameterSourceDynamic::FGameParameterSourceDynamic(const TArray<FString>& InDynamicPath)
-	: DynamicPath(InDynamicPath)
-{
-}
+FGameParameterSourceDynamic::FGameParameterSourceDynamic(const TArray<FString>& InDynamicPath) : DynamicPath(InDynamicPath) {}
 
 bool FGameParameterSourceDynamic::Resolve(UGameParameter* InContext)
 {

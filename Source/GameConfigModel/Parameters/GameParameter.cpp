@@ -5,9 +5,7 @@
 #include "ParameterEditCondition.h"
 #include "GameFramework/GameUserSettings.h"
 
-UGameParameter::UGameParameter()
-{
-}
+UGameParameter::UGameParameter() {}
 
 void UGameParameter::SetDisplayName(const FText& InDisplayName)
 {
@@ -78,6 +76,7 @@ void UGameParameter::EndInitialize()
 void UGameParameter::OnInitialized()
 {
 	ensureMsgf(bReady, TEXT("Error! Parameter initialization is not completed!"));
+	OnParameterInitialized.Broadcast(this);
 }
 
 void UGameParameter::OnEditConditionChangedHandler()
@@ -106,8 +105,8 @@ UGameUserSettings* UGameParameter::GetGameUserSettings() const
 
 void UGameParameter::AddChildParameter(UGameParameter* InChildParameter)
 {
-	if(ChildrenParameters.Contains(InChildParameter)) return;
-	
+	if (ChildrenParameters.Contains(InChildParameter)) return;
+
 	ChildrenParameters.Add(InChildParameter);
 	InChildParameter->OnParameterChangedEvent.AddUObject(this, &ThisClass::OnChildParameterChangedHandler);
 }
@@ -136,6 +135,4 @@ void UGameParameter::OnParentParameterChangedHandler(UGameParameter* InParameter
 	}
 }
 
-void UGameParameter::OnChildParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason)
-{
-}
+void UGameParameter::OnChildParameterChangedHandler(UGameParameter* InParameter, EGameParameterChangeReason InChangeReason) {}

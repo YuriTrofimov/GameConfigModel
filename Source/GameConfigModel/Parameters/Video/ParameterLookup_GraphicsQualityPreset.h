@@ -24,6 +24,7 @@ public:
 	virtual void SaveBaseValue() override;
 	virtual void GetOptionsCaptions(TArray<FText>& Captions) override;
 	virtual int32 GetSelectedIndex() override;
+
 protected:
 	bool bCustomMode = false;
 	int32 CustomIndex = 4;

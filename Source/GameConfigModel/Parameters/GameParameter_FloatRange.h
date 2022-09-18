@@ -5,7 +5,6 @@
 
 #include "CoreMinimal.h"
 #include "GameParameter_Float.h"
-#include "UObject/Object.h"
 #include "GameParameter_FloatRange.generated.h"
 
 /**
@@ -29,6 +28,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetMaxValue(float InMaxValue);
+
+	virtual void SetValue(float InValue) override;
 
 protected:
 	float MinValue = 0.0f;

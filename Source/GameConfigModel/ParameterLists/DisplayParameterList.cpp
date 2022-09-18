@@ -11,9 +11,7 @@
 
 #define LOCTEXT_NAMESPACE "GameParameters"
 
-UDisplayParameterList::UDisplayParameterList()
-{
-}
+UDisplayParameterList::UDisplayParameterList() {}
 
 void UDisplayParameterList::Initialize(ULocalPlayer* InLocalPlayer)
 {
@@ -59,10 +57,7 @@ void UDisplayParameterList::CreateResolutionParam(UParameterLookup_Enum* WindowM
 	if (!Param) return;
 	Param->SetDisplayName(LOCTEXT("Resolution_Name", "Resolution"));
 	Param->SetParentParameter(WindowModeParameter);
-	Param->AddEditCondition(MakeShared<FLambdaEditCondition>([WindowModeParameter](UGameParameter*)
-	{
-		return WindowModeParameter->GetValue<EWindowMode::Type>() == EWindowMode::Fullscreen;
-	}));
+	Param->AddEditCondition(MakeShared<FLambdaEditCondition>([WindowModeParameter](UGameParameter*) { return WindowModeParameter->GetValue<EWindowMode::Type>() == EWindowMode::Fullscreen; }));
 	Param->Initialize(LocalPlayer);
 }
 
@@ -71,9 +66,8 @@ void UDisplayParameterList::CreateVSyncParam()
 	auto* Param = Cast<UParameterLookup_Bool>(CreateParameter(TEXT("VerticalSync"), UParameterLookup_Bool::StaticClass()));
 	if (!Param) return;
 	Param->SetDisplayName(LOCTEXT("VerticalSync_Name", "Vertical Sync"));
-	Param->SetDescription(LOCTEXT("VerticalSync_Description",
-		"Enabling Vertical Sync eliminates screen tearing by always rendering and presenting a full frame. Disabling Vertical Sync can give "
-		"higher frame rate and better input response, but can result in horizontal screen tearing."));
+	Param->SetDescription(LOCTEXT("VerticalSync_Description", "Enabling Vertical Sync eliminates screen tearing by always rendering and presenting a full frame. Disabling Vertical Sync can give "
+															  "higher frame rate and better input response, but can result in horizontal screen tearing."));
 
 	Param->SetDynamicGetter(GET_GAME_SETTINGS_FUNCTION_PATH(IsVSyncEnabled));
 	Param->SetDynamicSetter(GET_GAME_SETTINGS_FUNCTION_PATH(SetVSyncEnabled));

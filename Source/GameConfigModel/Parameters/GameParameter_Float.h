@@ -26,7 +26,7 @@ public:
 	float GetValue();
 
 	UFUNCTION(BlueprintCallable)
-	void SetValue(float InValue);
+	virtual void SetValue(float InValue);
 
 	void SetDynamicGetter(const TSharedRef<FGameParameterSource>& InParameterGetter);
 	void SetDynamicSetter(const TSharedRef<FGameParameterSource>& InParameterSetter);
@@ -35,6 +35,7 @@ public:
 	virtual void SetDefaultValue(float InDefaultValue);
 	virtual void SaveBaseValue() override;
 	virtual void LoadBaseValue() override;
+
 protected:
 	virtual void OnInitialized() override;
 	virtual void SetValue(float InValue, EGameParameterChangeReason Reason);
@@ -42,6 +43,7 @@ protected:
 	float BaseValue = 0.0f;
 	TSharedPtr<FGameParameterSource> ParameterGetter;
 	TSharedPtr<FGameParameterSource> ParameterSetter;
+
 private:
 	void OnGetterReady();
 	void OnSetterReady();

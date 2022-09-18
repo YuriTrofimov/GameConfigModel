@@ -15,10 +15,7 @@ struct FParameterLookupOption
 
 	FParameterLookupOption() = default;
 
-	FParameterLookupOption(const FString& InValue, const FText& InCaption)
-		: Value(InValue), Caption(InCaption)
-	{
-	}
+	FParameterLookupOption(const FString& InValue, const FText& InCaption) : Value(InValue), Caption(InCaption) {}
 
 	/* Parameter value */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -88,10 +85,7 @@ public:
 	virtual void BeginInitialize() override;
 
 	/* Toggle apply parameter value on selected option changed event */
-	void SetApplyOnSelectionChanged(bool bInEnabled)
-	{
-		bApplyOnSelectionChanged = bInEnabled;
-	}
+	void SetApplyOnSelectionChanged(bool bInEnabled) { bApplyOnSelectionChanged = bInEnabled; }
 
 protected:
 	virtual void SelectOptionByValue(const FString& InValue, EGameParameterChangeReason Reason);

@@ -16,7 +16,7 @@
 /**
  * List of game parameters
  */
-UCLASS(BlueprintType)
+UCLASS(Abstract, BlueprintType)
 class GAMECONFIGMODEL_API UParameterList : public UObject
 {
 	GENERATED_BODY()
@@ -38,7 +38,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void LoadBaseValue();
-	
+
 	UFUNCTION(BlueprintCallable)
 	virtual void SaveBaseValue();
 
@@ -47,7 +47,7 @@ protected:
 	TObjectPtr<ULocalPlayer> LocalPlayer;
 
 	/* Create parameters */
-	virtual void Initialize(ULocalPlayer* InLocalPlayer) PURE_VIRTUAL(,);
+	virtual void Initialize(ULocalPlayer* InLocalPlayer) PURE_VIRTUAL(, );
 
 	/* Creates new parameter. Returns nullptr if name not unique in list */
 	UGameParameter* CreateParameter(const FName& UniqueName, TSubclassOf<UGameParameter> Class);

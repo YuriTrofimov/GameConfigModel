@@ -53,8 +53,11 @@ public:
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTextValueChangedHandler, UGameParameter*, Parameter, FText, Text);
 
+	DECLARE_EVENT_OneParam(UGameParameter, FOnParameterInitialized, UGameParameter*);
+
 	FOnParameterChanged OnParameterChangedEvent;
 	FOnParameterEditConditionChanged OnParameterEditConditionChangedEvent;
+	FOnParameterInitialized OnParameterInitialized;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnParameterVisibleChangedHandler OnVisibleChanged;
@@ -139,13 +142,13 @@ public:
 	bool CanEdit();
 
 	/* Save parameter base value */
-	virtual void SaveBaseValue() PURE_VIRTUAL(,);
+	virtual void SaveBaseValue() PURE_VIRTUAL(, );
 
 	/* Resets parameter value to the default */
-	virtual void ResetToDefault() PURE_VIRTUAL(,);
+	virtual void ResetToDefault() PURE_VIRTUAL(, );
 
 	/* Load parameter value before any changes */
-	virtual void LoadBaseValue() PURE_VIRTUAL(,);
+	virtual void LoadBaseValue() PURE_VIRTUAL(, );
 
 	UFUNCTION()
 	UGameUserSettings* GetGameUserSettings() const;
