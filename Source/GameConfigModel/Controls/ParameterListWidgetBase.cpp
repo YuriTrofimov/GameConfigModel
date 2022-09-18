@@ -10,12 +10,15 @@ void UParameterListWidgetBase::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (!ListClass) return;
-	ViewModel = NewObject<UParameterList>(this, ListClass);
-	if (!ViewModel) return;
-	ViewModel->OnParameterCreated.AddDynamic(this, &ThisClass::OnParameterCreated);
-	ViewModel->InitializeList(GetOwningPlayer());
-	ViewModel->LoadBaseValue();
+	if (!ViewModel)
+	{
+		if (!ListClass) return;
+		ViewModel = NewObject<UParameterList>(this, ListClass);
+		if (!ViewModel) return;
+		ViewModel->OnParameterCreated.AddDynamic(this, &ThisClass::OnParameterCreated);
+		ViewModel->InitializeList(GetOwningPlayer());
+		ViewModel->LoadBaseValue();
+	}
 }
 
 void UParameterListWidgetBase::SaveCurrentValue()
