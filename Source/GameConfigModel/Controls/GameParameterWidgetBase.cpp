@@ -3,7 +3,6 @@
 
 #include "GameParameterWidgetBase.h"
 #include "Components/TextBlock.h"
-#include "GameConfigModel/Parameters/GameParameter.h"
 
 void UGameParameterWidgetBase::SetGameParameter(UGameParameter* InParameter)
 {

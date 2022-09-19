@@ -30,4 +30,8 @@ protected:
 	UFUNCTION()
 	void OnSliderValueChanged(float Value);
 	void OnViewModelInitialized(UGameParameter* InGameParameter);
+
+	UFUNCTION()
+	void OnParameterChangedHandler(UGameParameter* InGameParameter, EGameParameterChangeReason InChangeReason);
+
 };

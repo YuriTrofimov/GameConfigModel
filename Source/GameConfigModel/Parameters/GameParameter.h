@@ -24,6 +24,7 @@ enum class EParameterType : uint8
 };
 
 /* Game parameter value change reason */
+UENUM()
 enum class EGameParameterChangeReason : uint8
 {
 	Change,

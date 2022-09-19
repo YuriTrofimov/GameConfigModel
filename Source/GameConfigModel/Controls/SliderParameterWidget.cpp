@@ -15,6 +15,7 @@ void USliderParameterWidget::SetGameParameter(UGameParameter* InParameter)
 	ParameterSlider->SetMaxValue(ViewModel->GetMaxValue());
 	ParameterSlider->OnValueChanged.AddDynamic(this, &ThisClass::OnSliderValueChanged);
 	ViewModel->OnParameterInitialized.AddUObject(this, &ThisClass::OnViewModelInitialized);
+	ViewModel->OnParameterChangedEvent.AddUObject(this, &ThisClass::OnParameterChangedHandler);
 }
 
 void USliderParameterWidget::NativeConstruct()
@@ -32,4 +33,14 @@ void USliderParameterWidget::OnViewModelInitialized(UGameParameter* InGameParame
 {
 	if (!ViewModel || !ParameterSlider) return;
 	ParameterSlider->SetValue(ViewModel->GetValue());
+}
+
+void USliderParameterWidget::OnParameterChangedHandler(UGameParameter* InGameParameter, EGameParameterChangeReason InChangeReason)
+{
+	if (!ViewModel || !ParameterSlider) return;
+	if (InChangeReason != EGameParameterChangeReason::Change)
+	{
+		const float Value = ViewModel->GetValue();
+		ParameterSlider->SetValue(Value);
+	}
 }

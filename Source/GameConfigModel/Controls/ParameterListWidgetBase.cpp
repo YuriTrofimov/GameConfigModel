@@ -17,6 +17,9 @@ void UParameterListWidgetBase::NativeConstruct()
 		if (!ViewModel) return;
 		ViewModel->OnParameterCreated.AddDynamic(this, &ThisClass::OnParameterCreated);
 		ViewModel->InitializeList(GetOwningPlayer());
+	}
+	if (ViewModel)
+	{
 		ViewModel->LoadBaseValue();
 	}
 }

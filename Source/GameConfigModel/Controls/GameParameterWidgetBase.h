@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "GameConfigModel/Parameters/GameParameter.h"
 #include "GameParameterWidgetBase.generated.h"
 
 /**
@@ -16,7 +17,7 @@ class GAMECONFIGMODEL_API UGameParameterWidgetBase : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	virtual void SetGameParameter(class UGameParameter* InParameter);
+	virtual void SetGameParameter(UGameParameter* InParameter);
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

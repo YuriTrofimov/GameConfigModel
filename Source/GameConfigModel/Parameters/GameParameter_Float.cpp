@@ -70,6 +70,7 @@ void UGameParameter_Float::SaveBaseValue()
 void UGameParameter_Float::LoadBaseValue()
 {
 	BaseValue = GetValue();
+	RaiseParameterChanged(EGameParameterChangeReason::RestoreToBase);
 }
 
 void UGameParameter_Float::OnGetterReady()
