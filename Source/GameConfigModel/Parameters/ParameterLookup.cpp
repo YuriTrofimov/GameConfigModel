@@ -112,7 +112,7 @@ void UParameterLookup::SetDynamicSetter(const TSharedRef<FGameParameterSource>& 
 	ParameterSetter = InParameterSetter;
 }
 
-FString UParameterLookup::GetValueAsString()
+FString const UParameterLookup::GetValueAsString()
 {
 	check(ParameterGetter);
 	return ParameterGetter->GetValueAsString(this);

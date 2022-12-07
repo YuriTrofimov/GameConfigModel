@@ -29,7 +29,7 @@ public:
 	virtual void ParameterApplied(const ULocalPlayer* InLocalPlayer, UGameParameter* OwnerParameter) const {}
 
 	/* Owner parameter changed */
-	virtual void ParameterChanged(const ULocalPlayer* InLocalPlayer, UGameParameter* OwnerParameter, enum class EGameParameterChangeReason Reason) const {}
+	virtual void ParameterChanged(const ULocalPlayer* InLocalPlayer, UGameParameter* OwnerParameter, enum EGameParameterChangeReason Reason) const {}
 
 	/* Return TRUE if owner parameter can be edited */
 	virtual bool CanEdit(const ULocalPlayer* InLocalPlayer, UGameParameter* OwnerParameter) { return true; }

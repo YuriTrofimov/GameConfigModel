@@ -72,7 +72,7 @@ public:
 	void SetDynamicGetter(const TSharedRef<FGameParameterSource>& InParameterGetter);
 	void SetDynamicSetter(const TSharedRef<FGameParameterSource>& InParameterSetter);
 
-	FString GetValueAsString();
+	FString const GetValueAsString();
 	void SetValueFromString(FString InStringValue);
 	void SetDefaultValueFromString(FString InStringValue);
 
@@ -179,7 +179,7 @@ public:
 	}
 
 	template <typename NumberType>
-	NumberType GetValue() const
+	NumberType GetValue()
 	{
 		const FString ValueString = GetValueAsString();
 		NumberType OutValue;
